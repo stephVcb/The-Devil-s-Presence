@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca75b2c51d5b13346bb27b61dae5a1c0, type: 3}
+  m_Name: GameData
+  m_EditorClassIdentifier: 
+  questions:
+  - id: Q1
+    prompt: 'Tu viens d''arriver, comment vas-tu commencer? '
+    reponses:
+    - text: faire vasciller la lumiere
+      impact: -1
+    - text: Faire tomber un objet
+      impact: 0
+    - text: pousser un murmure
+      impact: 1
+  - id: Q2
+    prompt: Continuons et faisons lui peur
+    reponses:
+    - text: lui faire voir une ombre terrifiante a la fenetre
+      impact: 2
+    - text: faire bouger les rideaux
+      impact: -1
+    - text: pouser un hurlement
+      impact: 0
+  - id: Q3
+    prompt: la fin de notre mission arrive.. pousse le a bout
+    reponses:
+    - text: faire peter les plomb, faire apparaitre un screemer
+      impact: 0
+    - text: 'allumer la radio '
+      impact: -1
+    - text: donner une gifle et lui tirer les cheveux
+      impact: 2
+  badEndingMax: -1
+  neutralEndingMax: 3
+  goodEndingMin: 4

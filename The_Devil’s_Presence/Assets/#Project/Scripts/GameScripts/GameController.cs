@@ -106,17 +106,17 @@ public class GameController : MonoBehaviour
         if (gauge <= gameData.badEndingMax)
         {
             if (useEndingScenes) SceneManager.LoadScene(badEndingScene);
-            else EndInline("Fin : Mauvaise 💀");
+            else EndInline("Fin : Mauvaise ");
             return;
         }
         if (gauge <= gameData.neutralEndingMax)
         {
             if (useEndingScenes) SceneManager.LoadScene(neutralEndingScene);
-            else EndInline("Fin : Neutre 😐");
+            else EndInline("Fin : Neutre ");
             return;
         }
         if (useEndingScenes) SceneManager.LoadScene(goodEndingScene);
-        else EndInline("Fin : Bonne 🌞");
+        else EndInline("Fin : Bonne ");
     }
 
     void EndInline(string endMessage)
