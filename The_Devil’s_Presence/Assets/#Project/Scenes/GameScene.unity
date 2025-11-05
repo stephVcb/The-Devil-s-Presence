@@ -626,9 +626,9 @@ MonoBehaviour:
   gameData: {fileID: 0}
   randomizeAnswers: 1
   useEndingScenes: 0
-  badEndingScene: End_Bad
-  neutralEndingScene: End_Neutral
-  goodEndingScene: End_Good
+  badEndingScene: BadEnd
+  neutralEndingScene: NeutralEnd
+  goodEndingScene: GoodEnd
 --- !u!4 &558710294
 Transform:
   m_ObjectHideFlags: 0

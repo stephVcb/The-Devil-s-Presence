@@ -16,7 +16,7 @@ public class StartScript : MonoBehaviour
     }
     public void ClickStart()
     {
-        SceneManager.LoadScene("MiseSituationScene");
+        label.SetText("Ceci est votre choix, commençons");
         Invoke("CommencerJeux", delay);
 
     }
