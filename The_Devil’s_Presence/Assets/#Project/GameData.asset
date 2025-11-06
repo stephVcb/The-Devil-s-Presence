@@ -18,28 +18,37 @@ MonoBehaviour:
     reponses:
     - text: faire vasciller la lumiere
       impact: -1
+      nextQuestion: -1
     - text: Faire tomber un objet
       impact: 0
+      nextQuestion: -1
     - text: pousser un murmure
-      impact: 1
+      impact: 2
+      nextQuestion: -1
   - id: Q2
     prompt: Continuons et faisons lui peur
     reponses:
-    - text: lui faire voir une ombre terrifiante a la fenetre
-      impact: 2
     - text: faire bouger les rideaux
       impact: -1
+      nextQuestion: -1
     - text: pouser un hurlement
       impact: 1
+      nextQuestion: -1
+    - text: ' lui faire voir une ombre terrifiante a la fenetre'
+      impact: 2
+      nextQuestion: -1
   - id: Q3
     prompt: la fin de notre mission arrive.. pousse le a bout
     reponses:
-    - text: faire peter les plomb, faire apparaitre un screemer
-      impact: 1
     - text: 'allumer la radio '
       impact: -1
+      nextQuestion: -1
+    - text: faire peter les plomb, faire apparaitre un screemer
+      impact: 1
+      nextQuestion: -1
     - text: donner une gifle et lui tirer les cheveux
       impact: 2
+      nextQuestion: -1
   badEndingMax: -1
   neutralEndingMax: 3
   goodEndingMin: 4

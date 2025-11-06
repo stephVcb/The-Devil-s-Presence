@@ -52,7 +52,7 @@ public class GameController : MonoBehaviour
 
         questionText.text = q.prompt;
 
-        // prépare ordre d’affichage
+        // prépare l'ordre d’affichage
         displayOrder.Clear();
         for (int i = 0; i < q.reponses.Count; i++) displayOrder.Add(i);
         if (randomizeAnswers)
@@ -78,8 +78,8 @@ public class GameController : MonoBehaviour
                 if (label) label.text = rep.text;
 
                 btn.onClick.RemoveAllListeners();
-                int capturedImpact = rep.impact;
-                btn.onClick.AddListener(() => OnAnswerChosen(capturedImpact));
+                int capturedIndex = logicalIndex;  
+                btn.onClick.AddListener(() => OnAnswerChosen(capturedIndex));
             }
             else
             {
@@ -88,42 +88,69 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void OnAnswerChosen(int impact)
+void OnAnswerChosen(int logicalIndex)
+{
+    //éviter les bugs d’index 
+    if (currentIndex < 0 || currentIndex >= gameData.questions.Count) return;
+
+    var q = gameData.questions[currentIndex];
+    if (q == null || q.reponses == null || logicalIndex < 0 || logicalIndex >= q.reponses.Count) return;
+
+    var r = q.reponses[logicalIndex];
+
+    //  on applique l'impact de la réponse sur la jauge 
+    gauge += r.impact;
+    UpdateGaugeUI(); // (si tu as une fonction d’affichage de la jauge)
+
+    // on décide quelle question vient ensuite 
+    if (r.nextQuestion >= 0 && r.nextQuestion < gameData.questions.Count)
     {
-        gauge += impact;
-        UpdateGaugeUI();
+        // saute vers une question précise (Q1, Q2, etc.)
+        currentIndex = r.nextQuestion;
+    }
+    else
+    {
+        // question suivante dans la liste
         currentIndex++;
-        RenderCurrentQuestion();
     }
 
+    //affichage de la fin selon la jauge 
+    if (currentIndex >= gameData.questions.Count)
+    {
+        ShowEnding(); 
+        return;
+    }
+
+    //affiche la question suivante
+    RenderCurrentQuestion();
+}
+
+    //affichage de la jauge pdt le jeu==> sert au debug 
     void UpdateGaugeUI()
     {
         if (gaugeText) gaugeText.text = $"Jauge : {gauge}";
     }
 
-    void ShowEnding()
+    // méthode qui charge Bad/Neutral/Good
+void ShowEnding()
     {
-        if (gauge <= gameData.badEndingMax)
-        {
-            if (useEndingScenes) SceneManager.LoadScene(badEndingScene);
-            else EndInline("Fin : Mauvaise ");
-            return;
-        }
-        if (gauge <= gameData.neutralEndingMax)
-        {
-            if (useEndingScenes) SceneManager.LoadScene(neutralEndingScene);
-            else EndInline("Fin : Neutre ");
-            return;
-        }
-        if (useEndingScenes) SceneManager.LoadScene(goodEndingScene);
-        else EndInline("Fin : Bonne ");
-        Debug.Log($"[Ending] gauge={gauge} | badMax={gameData.badEndingMax} | neutralMax={gameData.neutralEndingMax} | goodMin={gameData.goodEndingMin}");
-
+        Debug.Log($"[Ending] gauge={gauge} | badMax={gameData.badEndingMax} | goodMin={gameData.goodEndingMin}");
+    // Good si on atteint le seuil "bon"
+    if (gauge >= gameData.goodEndingMin)
+    {
+        SceneManager.LoadScene(goodEndingScene);
+        return;
     }
 
-    void EndInline(string endMessage)
+    // Bad si on est au-dessous ou égal au seuil "mauvais"
+    if (gauge <= gameData.badEndingMax)
     {
-        questionText.text = endMessage + $"\n\n(SCORE FINAL : {gauge})";
-        foreach (var btn in answerButtons) btn.gameObject.SetActive(false);
+        SceneManager.LoadScene(badEndingScene);
+        return;
     }
+
+    // Sinon, c'est forcément Neutral
+    SceneManager.LoadScene(neutralEndingScene);
+}
+
 }
