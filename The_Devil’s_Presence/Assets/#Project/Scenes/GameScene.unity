@@ -621,11 +621,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questionText: {fileID: 1828375087}
-  answerButtons: []
+  answerButtons:
+  - {fileID: 1331788893}
+  - {fileID: 930822096}
+  - {fileID: 1494703639}
   gaugeText: {fileID: 0}
-  gameData: {fileID: 0}
+  gameData: {fileID: 11400000, guid: 7c605a9130145cb4ebfd8bc803304b78, type: 2}
   randomizeAnswers: 1
-  useEndingScenes: 0
+  useEndingScenes: 1
   badEndingScene: BadEnd
   neutralEndingScene: NeutralEnd
   goodEndingScene: GoodEnd

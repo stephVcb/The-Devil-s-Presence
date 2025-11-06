@@ -17,9 +17,9 @@ public class GameController : MonoBehaviour
     [Header("Options")]
     [SerializeField] private bool randomizeAnswers = true;
     [SerializeField] private bool useEndingScenes = false;
-    [SerializeField] private string badEndingScene = "End_Bad";
-    [SerializeField] private string neutralEndingScene = "End_Neutral";
-    [SerializeField] private string goodEndingScene = "End_Good";
+    [SerializeField] private string badEndingScene = "BadEnd";
+    [SerializeField] private string neutralEndingScene = "NeutralEnd";
+    [SerializeField] private string goodEndingScene = "GoodEnd";
 
     private int currentIndex = 0;
     private int gauge = 0;
@@ -117,6 +117,8 @@ public class GameController : MonoBehaviour
         }
         if (useEndingScenes) SceneManager.LoadScene(goodEndingScene);
         else EndInline("Fin : Bonne ");
+        Debug.Log($"[Ending] gauge={gauge} | badMax={gameData.badEndingMax} | neutralMax={gameData.neutralEndingMax} | goodMin={gameData.goodEndingMin}");
+
     }
 
     void EndInline(string endMessage)

@@ -30,12 +30,12 @@ MonoBehaviour:
     - text: faire bouger les rideaux
       impact: -1
     - text: pouser un hurlement
-      impact: 0
+      impact: 1
   - id: Q3
     prompt: la fin de notre mission arrive.. pousse le a bout
     reponses:
     - text: faire peter les plomb, faire apparaitre un screemer
-      impact: 0
+      impact: 1
     - text: 'allumer la radio '
       impact: -1
     - text: donner une gifle et lui tirer les cheveux
