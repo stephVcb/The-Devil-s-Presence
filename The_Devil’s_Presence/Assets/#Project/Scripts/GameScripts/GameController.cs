@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour
 
     [Header("Options")]
     [SerializeField] private bool randomizeAnswers = true;
-    [SerializeField] private bool useEndingScenes = false;
+    //[SerializeField] private bool useEndingScenes = false;
     [SerializeField] private string badEndingScene = "BadEnd";
     [SerializeField] private string neutralEndingScene = "NeutralEnd";
     [SerializeField] private string goodEndingScene = "GoodEnd";

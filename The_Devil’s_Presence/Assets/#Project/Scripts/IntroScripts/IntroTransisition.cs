@@ -10,6 +10,7 @@ public class IntroTransition : MonoBehaviour
     [SerializeField] private GameObject quitButton;
     [SerializeField] private TMP_Text introText; // ton texte de contexte (désactivé par défaut)
     [SerializeField] private GameObject[] objectsToHide;
+        [SerializeField] private GameObject skipButton;
 
     [Header("Paramètres")]
     [TextArea(3, 10)]
@@ -37,6 +38,10 @@ public class IntroTransition : MonoBehaviour
         // Active le texte narratif
         introText.text = texteIntro;
         introText.gameObject.SetActive(true);
+
+        //Afficher le bouton skip, pour passer l'intro du jeux 
+        if (skipButton != null)
+        skipButton.SetActive(true);
 
         // Lance la coroutine de transition
         StartCoroutine(LaunchGameAfterDelay());
@@ -67,11 +72,16 @@ public class IntroTransition : MonoBehaviour
     private IEnumerator QuitRoutine()
     {
         yield return new WaitForSeconds(1f);
-//idem que plus haut 
+        //idem que plus haut 
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif
     }
+    public void OnSkipClicked()
+    {
+        SceneManager.LoadScene(nextScene);
+    }
+
 }
