@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   questions:
-  - id: Q1
+  - id: Q0
     prompt: 'Tu viens d''arriver, comment vas-tu commencer? '
     reponses:
     - text: faire vasciller la lumiere
@@ -21,20 +21,32 @@ MonoBehaviour:
       nextQuestion: -1
     - text: Faire tomber un objet
       impact: 0
-      nextQuestion: -1
+      nextQuestion: 2
     - text: pousser un murmure
       impact: 2
-      nextQuestion: -1
-  - id: Q2
+      nextQuestion: 2
+  - id: Q1
     prompt: Continuons et faisons lui peur
     reponses:
     - text: faire bouger les rideaux
       impact: -1
-      nextQuestion: -1
+      nextQuestion: -2
     - text: pouser un hurlement
       impact: 1
-      nextQuestion: -1
+      nextQuestion: 2
     - text: ' lui faire voir une ombre terrifiante a la fenetre'
+      impact: 2
+      nextQuestion: 2
+  - id: Q2
+    prompt: "Il commence \xE0 craquer rajoute une couche"
+    reponses:
+    - text: ouvrir une porte
+      impact: -1
+      nextQuestion: -1
+    - text: faire passer un "fantome"
+      impact: 1
+      nextQuestion: -1
+    - text: lui faire croire qu'il y a du sang partout
       impact: 2
       nextQuestion: -1
   - id: Q3

@@ -16,7 +16,6 @@ public class GameController : MonoBehaviour
 
     [Header("Options")]
     [SerializeField] private bool randomizeAnswers = true;
-    //[SerializeField] private bool useEndingScenes = false;
     [SerializeField] private string badEndingScene = "BadEnd";
     [SerializeField] private string neutralEndingScene = "NeutralEnd";
     [SerializeField] private string goodEndingScene = "GoodEnd";
@@ -29,12 +28,19 @@ public class GameController : MonoBehaviour
     {
         gauge = 0;
         currentIndex = 0;
+        Debug.Log($"[GC] GameData utilisé = {gameData?.name} | questions={gameData?.questions?.Count}");
         UpdateGaugeUI();
         RenderCurrentQuestion();
     }
 
     void RenderCurrentQuestion()
     {
+        if (gameData == null || gameData.questions == null)
+        {
+            Debug.LogError("[GC] GameData ou sa liste de questions est null.");
+            return;
+        }
+
         if (currentIndex >= gameData.questions.Count)
         {
             ShowEnding();
@@ -44,13 +50,13 @@ public class GameController : MonoBehaviour
         var q = gameData.questions[currentIndex];
         if (q == null || q.reponses == null || q.reponses.Count == 0)
         {
-            Debug.LogWarning($"[GameController] Question {currentIndex} invalide, on saute.");
+            Debug.LogWarning($"[GC] Question {currentIndex} invalide, on saute.");
             currentIndex++;
             RenderCurrentQuestion();
             return;
         }
 
-        questionText.text = q.prompt;
+        if (questionText != null) questionText.text = q.prompt;
 
         // prépare l'ordre d’affichage
         displayOrder.Clear();
@@ -69,6 +75,8 @@ public class GameController : MonoBehaviour
             if (i < q.reponses.Count)
             {
                 var btn = answerButtons[i];
+                if (!btn) continue;
+
                 btn.gameObject.SetActive(true);
 
                 int logicalIndex = displayOrder[i];
@@ -78,79 +86,79 @@ public class GameController : MonoBehaviour
                 if (label) label.text = rep.text;
 
                 btn.onClick.RemoveAllListeners();
-                int capturedIndex = logicalIndex;  
+                int capturedIndex = logicalIndex;
                 btn.onClick.AddListener(() => OnAnswerChosen(capturedIndex));
             }
             else
             {
-                answerButtons[i].gameObject.SetActive(false);
+                if (answerButtons[i]) answerButtons[i].gameObject.SetActive(false);
             }
         }
     }
 
-void OnAnswerChosen(int logicalIndex)
-{
-    //éviter les bugs d’index 
-    if (currentIndex < 0 || currentIndex >= gameData.questions.Count) return;
-
-    var q = gameData.questions[currentIndex];
-    if (q == null || q.reponses == null || logicalIndex < 0 || logicalIndex >= q.reponses.Count) return;
-
-    var r = q.reponses[logicalIndex];
-
-    //  on applique l'impact de la réponse sur la jauge 
-    gauge += r.impact;
-    UpdateGaugeUI(); // (si tu as une fonction d’affichage de la jauge)
-
-    // on décide quelle question vient ensuite 
-    if (r.nextQuestion >= 0 && r.nextQuestion < gameData.questions.Count)
+    void OnAnswerChosen(int logicalIndex)
     {
-        // saute vers une question précise (Q1, Q2, etc.)
-        currentIndex = r.nextQuestion;
-    }
-    else
-    {
-        // question suivante dans la liste
-        currentIndex++;
+        if (gameData == null || gameData.questions == null) return;
+        if (currentIndex < 0 || currentIndex >= gameData.questions.Count) return;
+
+        var q = gameData.questions[currentIndex];
+        if (q == null || q.reponses == null || logicalIndex < 0 || logicalIndex >= q.reponses.Count) return;
+
+        var r = q.reponses[logicalIndex];
+
+        Debug.Log($"[GC] Click: Q{currentIndex} R{logicalIndex} -> next={r.nextQuestion} (impact {r.impact})");
+
+        gauge += r.impact;
+        UpdateGaugeUI();
+        //FIN ANTICIPÉE : -2 => on évalue la fin directement maintenant
+        if (r.nextQuestion == -2)
+        {
+            currentIndex = gameData.questions.Count; // force la condition de fin
+            ShowEnding();
+            return;
+        }
+
+        if (r.nextQuestion >= 0 && r.nextQuestion < gameData.questions.Count)
+        {
+            currentIndex = r.nextQuestion; // saut explicite
+        }
+        else
+        {
+            currentIndex++; // enchaînement linéaire si nextQuestion est invalide (-1 ou hors plage)
+        }
+
+        Debug.Log($"[GC] Next Q = {currentIndex}");
+
+        if (currentIndex >= gameData.questions.Count)
+        {
+            ShowEnding();
+            return;
+        }
+
+        RenderCurrentQuestion();
     }
 
-    //affichage de la fin selon la jauge 
-    if (currentIndex >= gameData.questions.Count)
-    {
-        ShowEnding(); 
-        return;
-    }
-
-    //affiche la question suivante
-    RenderCurrentQuestion();
-}
-
-    //affichage de la jauge pdt le jeu==> sert au debug 
     void UpdateGaugeUI()
     {
         if (gaugeText) gaugeText.text = $"Jauge : {gauge}";
     }
 
-    // méthode qui charge Bad/Neutral/Good
-void ShowEnding()
+    void ShowEnding()
     {
         Debug.Log($"[Ending] gauge={gauge} | badMax={gameData.badEndingMax} | goodMin={gameData.goodEndingMin}");
-    // Good si on atteint le seuil "bon"
-    if (gauge >= gameData.goodEndingMin)
-    {
-        SceneManager.LoadScene(goodEndingScene);
-        return;
+
+        if (gauge >= gameData.goodEndingMin)
+        {
+            SceneManager.LoadScene(goodEndingScene);
+            return;
+        }
+
+        if (gauge <= gameData.badEndingMax)
+        {
+            SceneManager.LoadScene(badEndingScene);
+            return;
+        }
+
+        SceneManager.LoadScene(neutralEndingScene);
     }
-
-    // Bad si on est au-dessous ou égal au seuil "mauvais"
-    if (gauge <= gameData.badEndingMax)
-    {
-        SceneManager.LoadScene(badEndingScene);
-        return;
-    }
-
-    // Sinon, c'est forcément Neutral
-    SceneManager.LoadScene(neutralEndingScene);
-}
-
 }

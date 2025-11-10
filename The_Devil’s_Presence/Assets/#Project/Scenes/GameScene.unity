@@ -627,8 +627,7 @@ MonoBehaviour:
   - {fileID: 1494703639}
   gaugeText: {fileID: 0}
   gameData: {fileID: 11400000, guid: 7c605a9130145cb4ebfd8bc803304b78, type: 2}
-  randomizeAnswers: 0
-  useEndingScenes: 1
+  randomizeAnswers: 1
   badEndingScene: BadEnd
   neutralEndingScene: NeutralEnd
   goodEndingScene: GoodEnd
