@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe79f9353655bc45970064f25aac3e0, type: 3}
   m_Name: speechBubble_horror
   m_EditorClassIdentifier: 
-  fillColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  fillColor: {r: 0.509434, g: 0.13697045, b: 0.13697045, a: 0.7294118}
+  outlineColor: {r: 0.397, g: 0.09175944, b: 0.09175944, a: 1}
   dialogueTextColor: {r: 0, g: 0, b: 0, a: 1}
