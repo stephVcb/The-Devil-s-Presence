@@ -9,11 +9,6 @@ public class StartScript : MonoBehaviour
     [SerializeField] private TMP_Text label;
     [SerializeField] private float delay = 3f;
     private string nomScene = "GameScene";
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
     public void ClickStart()
     {
         label.SetText("Ceci est votre choix, commençons");
