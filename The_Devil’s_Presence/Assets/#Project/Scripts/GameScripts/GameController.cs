@@ -7,40 +7,51 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] private TextMeshProUGUI questionText;
-    [SerializeField] private List<Button> answerButtons;    // 3 boutons
-    [SerializeField] private TextMeshProUGUI gaugeText;     // optionnel
+    [SerializeField] private TextMeshProUGUI questionText;      // Zone de texte pour afficher la question (si ça pète ici, on ne voit plus rien)
+    [SerializeField] private List<Button> answerButtons;        // Les 3 boutons de réponses
+    [SerializeField] private TextMeshProUGUI gaugeText;         // Affichage de la jauge (optionnel, peut disparaître plus tard)
+    [SerializeField] private TextEffect typewriter;             // Effet d'écriture pour la question
 
     [Header("Données")]
-    [SerializeField] private GameData gameData;
+    [SerializeField] private GameData gameData;                 // ScriptableObject qui contient toutes les questions / réponses
 
     [Header("Options")]
-    [SerializeField] private bool randomizeAnswers = true;
-    [SerializeField] private string badEndingScene = "BadEnd";
-    [SerializeField] private string neutralEndingScene = "NeutralEnd";
-    [SerializeField] private string goodEndingScene = "GoodEnd";
+    [SerializeField] private bool randomizeAnswers = true;      // Si vrai, on mélange l’ordre des réponses (histoire de ne pas cliquer toujours sur le même bouton)
+    [SerializeField] private string badEndingScene = "BadEnd";  // Nom de la scène pour la mauvaise fin
+    [SerializeField] private string neutralEndingScene = "NeutralEnd"; // Nom de la scène pour la fin neutre
+    [SerializeField] private string goodEndingScene = "GoodEnd";       // Nom de la scène pour la bonne fin
 
-    private int currentIndex = 0;
-    private int gauge = 0;
-    private readonly List<int> displayOrder = new List<int>(3);
+    private int currentIndex = 0;                               // Index de la question actuelle
+    private int gauge = 0;                                      // Valeur de la jauge (emprise / karma chelou)
+    private readonly List<int> displayOrder = new List<int>(3); // Ordre d’affichage des réponses (pour le mélange)
+
+    [Header("Background")]
+    [SerializeField] private Image backgroundImage;             // L’image UI qui affiche le fond (salon/chambre/cuisine)
+    [SerializeField] private Sprite salonSprite;                // Sprite du salon
+    [SerializeField] private Sprite chambreSprite;              // Sprite de la chambre
+    [SerializeField] private Sprite cuisineSprite;              // Sprite de la cuisine
 
     void Start()
     {
         gauge = 0;
         currentIndex = 0;
+
         Debug.Log($"[GC] GameData utilisé = {gameData?.name} | questions={gameData?.questions?.Count}");
+
         UpdateGaugeUI();
         RenderCurrentQuestion();
     }
 
     void RenderCurrentQuestion()
     {
+        // Si pas de données -> rideau.
         if (gameData == null || gameData.questions == null)
         {
             Debug.LogError("[GC] GameData ou sa liste de questions est null.");
             return;
         }
 
+        // Si on a dépassé la dernière question -> on enchaîne sur la fin.
         if (currentIndex >= gameData.questions.Count)
         {
             ShowEnding();
@@ -48,6 +59,7 @@ public class GameController : MonoBehaviour
         }
 
         var q = gameData.questions[currentIndex];
+
         if (q == null || q.reponses == null || q.reponses.Count == 0)
         {
             Debug.LogWarning($"[GC] Question {currentIndex} invalide, on saute.");
@@ -56,11 +68,45 @@ public class GameController : MonoBehaviour
             return;
         }
 
-        if (questionText != null) questionText.text = q.prompt;
+        // On coupe les boutons pendant que la phrase s'écrit (on est pas pressés).
+        foreach (var btn in answerButtons)
+        {
+            if (btn) btn.gameObject.SetActive(false);
+        }
 
-        // prépare l'ordre d’affichage
+        // Décor adapté à la question
+        UpdateBackground(q.background);
+
+        // On branche le callback : quand le texte est fini -> on affiche les réponses
+        if (typewriter != null)
+        {
+            typewriter.OnFinished = () =>
+            {
+                ShowAnswers(q);
+            };
+
+            typewriter.Run(q.prompt);
+        }
+        else
+        {
+            // Si jamais le typewriter n’est pas branché, on fait un affichage brut + réponses directes.
+            if (questionText != null)
+                questionText.text = q.prompt;
+
+            ShowAnswers(q);
+        }
+    }
+
+    /// <summary>
+    /// Affiche les réponses une fois que la question est complètement écrite.
+    /// </summary>
+    private void ShowAnswers(Questions q)
+    {
+        // Préparation de l’ordre d’affichage
         displayOrder.Clear();
-        for (int i = 0; i < q.reponses.Count; i++) displayOrder.Add(i);
+        for (int i = 0; i < q.reponses.Count; i++)
+            displayOrder.Add(i);
+
         if (randomizeAnswers)
         {
             for (int i = 0; i < displayOrder.Count; i++)
@@ -70,6 +116,7 @@ public class GameController : MonoBehaviour
             }
         }
 
+        // Distribution sur les boutons
         for (int i = 0; i < answerButtons.Count; i++)
         {
             if (i < q.reponses.Count)
@@ -82,8 +129,17 @@ public class GameController : MonoBehaviour
                 int logicalIndex = displayOrder[i];
                 var rep = q.reponses[logicalIndex];
 
-                var label = btn.GetComponentInChildren<TextMeshProUGUI>(true);
-                if (label) label.text = rep.text;
+                // On cherche d’abord un TextEffect sur le texte du bouton
+                var labelEffect = btn.GetComponentInChildren<TextEffect>(true);
+                if (labelEffect != null)
+                {
+                    labelEffect.Run(rep.text);
+                }
+                else
+                {
+                    var label = btn.GetComponentInChildren<TextMeshProUGUI>(true);
+                    if (label) label.text = rep.text;
+                }
 
                 btn.onClick.RemoveAllListeners();
                 int capturedIndex = logicalIndex;
@@ -91,7 +147,8 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                if (answerButtons[i]) answerButtons[i].gameObject.SetActive(false);
+                if (answerButtons[i])
+                    answerButtons[i].gameObject.SetActive(false);
             }
         }
     }
@@ -110,22 +167,18 @@ public class GameController : MonoBehaviour
 
         gauge += r.impact;
         UpdateGaugeUI();
-        //FIN ANTICIPÉE : -2 => on évalue la fin directement maintenant
+
         if (r.nextQuestion == -2)
         {
-            currentIndex = gameData.questions.Count; // force la condition de fin
+            currentIndex = gameData.questions.Count;
             ShowEnding();
             return;
         }
 
         if (r.nextQuestion >= 0 && r.nextQuestion < gameData.questions.Count)
-        {
-            currentIndex = r.nextQuestion; // saut explicite
-        }
+            currentIndex = r.nextQuestion;
         else
-        {
-            currentIndex++; // enchaînement linéaire si nextQuestion est invalide (-1 ou hors plage)
-        }
+            currentIndex++;
 
         Debug.Log($"[GC] Next Q = {currentIndex}");
 
@@ -160,5 +213,23 @@ public class GameController : MonoBehaviour
         }
 
         SceneManager.LoadScene(neutralEndingScene);
+    }
+
+    private void UpdateBackground(BackgroundType type)
+    {
+        if (backgroundImage == null) return;
+
+        switch (type)
+        {
+            case BackgroundType.Salon:
+                backgroundImage.sprite = salonSprite;
+                break;
+            case BackgroundType.Chambre:
+                backgroundImage.sprite = chambreSprite;
+                break;
+            case BackgroundType.Cuisine:
+                backgroundImage.sprite = cuisineSprite;
+                break;
+        }
     }
 }
