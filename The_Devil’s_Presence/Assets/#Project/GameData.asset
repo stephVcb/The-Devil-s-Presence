@@ -14,54 +14,59 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questions:
   - id: Q0
-    prompt: 'Tu viens d''arriver, comment vas-tu commencer? '
+    prompt: "Ah\u2026 te voil\xE0 enfin. M\xEAme ta respiration sonne comme une excuse.
+      Laisse-moi r\xE9fl\xE9chir\u2026 comment te briser en douceur pour commencer
+      ?"
     reponses:
-    - text: faire vasciller la lumiere
+    - text: Faire grincer le parquet.
       impact: -1
       nextQuestion: -1
-    - text: Faire tomber un objet
+    - text: "\xC9teindre tout d\u2019un coup."
       impact: 0
       nextQuestion: 2
-    - text: pousser un murmure
+    - text: Claquer toutes les portes.
       impact: 2
       nextQuestion: 2
     background: 0
   - id: Q1
-    prompt: Continuons et faisons lui peur
+    prompt: "La cuisine\u2026 l\u2019endroit parfait pour commencer les d\xE9g\xE2ts.
+      Tout ici coupe, pique, ou cong\xE8le. Et toi, tu trembles d\xE9j\xE0."
     reponses:
-    - text: faire bouger les rideaux
+    - text: Faire vibrer les verres.
       impact: -1
       nextQuestion: -2
-    - text: pouser un hurlement
+    - text: Claquer le tiroir aux couteaux.
       impact: 1
       nextQuestion: 2
-    - text: ' lui faire voir une ombre terrifiante a la fenetre'
+    - text: Faire voler un couteau.
       impact: 2
       nextQuestion: 2
     background: 2
   - id: Q2
-    prompt: "Il commence \xE0 craquer rajoute une couche"
+    prompt: "La chambre\u2026 enfin un lieu intime. Tu devrais te sentir en s\xE9curit\xE9
+      ici. C\u2019est fou comme certains croient encore \xE0 \xE7a."
     reponses:
-    - text: ouvrir une porte
+    - text: "Faire s\u2019affaisser le matelas."
       impact: -1
       nextQuestion: -1
-    - text: faire passer un "fantome"
+    - text: "Tirer la couverture d\u2019un coup sec."
       impact: 1
       nextQuestion: -1
-    - text: lui faire croire qu'il y a du sang partout
+    - text: "Te tra\xEEner hors du lit."
       impact: 2
       nextQuestion: -1
     background: 1
   - id: Q3
-    prompt: la fin de notre mission arrive.. pousse le a bout
+    prompt: "Et te voil\xE0 revenue dans ma cuisine\u2026 dans mon ventre. Alors\u2026
+      qu\u2019est-ce que je prends en premier ?"
     reponses:
-    - text: 'allumer la radio '
+    - text: "\xC9touffer un souvenir."
       impact: -1
       nextQuestion: -1
-    - text: faire peter les plomb, faire apparaitre un screemer
+    - text: Te voler ta voix.
       impact: 1
       nextQuestion: -1
-    - text: donner une gifle et lui tirer les cheveux
+    - text: "T\u2019\xE9vider de l\u2019int\xE9rieur"
       impact: 2
       nextQuestion: -1
     background: 2
