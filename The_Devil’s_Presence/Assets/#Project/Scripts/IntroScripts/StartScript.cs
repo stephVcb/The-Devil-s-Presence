@@ -1,24 +1,29 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-public class StartScript : MonoBehaviour
+public class StartGame : MonoBehaviour
 {
+    [SerializeField] private TextEffect transitionEffect;   // même TextMeshPro que Warning
+    [TextArea] public string transitionText;               // texte de transition
+    [SerializeField] private GameObject startButton;       // pour les cacher
+    [SerializeField] private GameObject quitButton;
+    [SerializeField] private string gameSceneName = "GameScene";
 
-    [SerializeField] private TMP_Text label;
-    [SerializeField] private float delay = 3f;
-    private string nomScene = "GameScene";
-    public void ClickStart()
+    public void OnClickStart()
     {
-        label.SetText("Ceci est votre choix, commençons");
-        Invoke("CommencerJeux", delay);
+        // Cache les boutons
+        startButton.SetActive(false);
+        quitButton.SetActive(false);
 
+        // Quand la transition est finie → on lance le jeu
+        transitionEffect.OnFinished += LoadGame;
+
+        // Lance le texte de transition
+        transitionEffect.Run(transitionText);
     }
-    void CommencerJeux()
+
+    private void LoadGame()
     {
-        // Charge la scène spécifiée.
-        SceneManager.LoadScene(nomScene, LoadSceneMode.Single);
+        SceneManager.LoadScene(gameSceneName);
     }
-
 }

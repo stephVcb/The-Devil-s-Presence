@@ -1,100 +1,67 @@
-using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using System.Collections;
 
 public class IntroTransition : MonoBehaviour
 {
     [Header("UI Références")]
+    [SerializeField] private TextMeshProUGUI introText;    // zone texte utilisée pour le warning + transition
+    [SerializeField] private GameObject[] objectsToHide;   // warningBubble, etc
     [SerializeField] private GameObject startButton;
     [SerializeField] private GameObject quitButton;
-    [SerializeField] private TMP_Text introText; // ton texte de contexte (désactivé par défaut)
-    [SerializeField] private GameObject[] objectsToHide;
-    [SerializeField] private GameObject skipButton;
+    [SerializeField] private GameObject skipButton;        // bouton skip (pour sauter la transition)
 
-    [Header("Référence du Fade")]
-    public FadeImage fadeImage;   // l’image du démon avec CanvasGroup
-    [Header("Timings du démon (apparition / pause / disparition)")]
-    public float demonFadeDuration = 4f;   // durée du fade-in ET fade-out
-    public float demonHoldDuration = 2f;   // temps où le démon reste visible
+    [Header("Texte de transition")]
+    [TextArea] public string transitionText;               // texte affiché après le fade démon
 
+    [Header("Référence du fade démon")]
+    [SerializeField] private FadeImage fadeImage;
 
-    [Header("Paramètres")]
-    [TextArea(3, 10)]
-    public string texteIntro =
-        "Vous êtes une présence invisible.\n" +
-        "Un esprit tapi dans l’ombre d’un nouvel arrivant.\n" +
-        "Vos murmures influenceront son destin…";
+    [Header("Timings du démon")]
+    [SerializeField] private float demonFadeDuration = 4f; // vitesse apparition/disparition
+    [SerializeField] private float demonHoldDuration = 2f; // temps où le démon reste visible
 
-    [SerializeField] private float delayBeforeGame = 10f; // durée avant lancement de la GameScene/ du jeu 
-    [SerializeField] private string nextScene = "GameScene"; 
+    [Header("Fin de transition")]
+    [SerializeField] private float delayBeforeGame = 1f;   // petit délai avant d’aller dans la scène du jeu
+    [SerializeField] private string nextScene = "GameScene";
 
 
-    // Appelé par le bouton Start
+
+    private void Awake()
+    {
+        // bouton skip caché au lancement
+        if (skipButton != null)
+            skipButton.SetActive(false);
+    }
+
+
+
+    // quand on clique sur "Start"
     public void OnStartClicked()
     {
-        // Cache les boutons
-        startButton.SetActive(false);
-        quitButton.SetActive(false);
+        // on désactive l'intro animator pour éviter que le warning se relance
+        var animator = GetComponent<IntroAnimator>();
+        if (animator != null)
+            animator.enabled = false;
 
-        // Cache les objets au démarrage du texte (comme le WARNING, les boutons, etc.)
-        foreach (GameObject obj in objectsToHide)
-        {
-            if (obj != null)
-                obj.SetActive(false);
-        }
+        // on cache start et quit
+        if (startButton != null) startButton.SetActive(false);
+        if (quitButton != null) quitButton.SetActive(false);
 
-        // Lance la séquence complète (Fade + Intro + Changement de scène)
-        StartCoroutine(IntroSequence());
-    }
+        // on vide le warning (surtout pas désactiver la zone sinon le TextEffect ne pourra pas écrire dedans)
+        if (introText != null)
+            introText.text = "";
 
-
-    private IEnumerator IntroSequence()
-    {
-        // --- FADE DEMON : apparation en 1 seconde ---
-        fadeImage.FadeIn();
-        yield return new WaitForSeconds(1.2f); // faire apparaître + laisser 0.2s visible
-
-        // --- FADE DEMON : disparition ---
-        fadeImage.FadeOut();
-        yield return new WaitForSeconds(1f); // on attend qu’il disparaisse
-
-        // Active le texte narratif
-        introText.text = texteIntro;
-        introText.gameObject.SetActive(true);
-
-        //Afficher le bouton skip, pour passer l'intro du jeux 
-        if (skipButton != null)
-            skipButton.SetActive(true);
-
-        // --- Attendre avant la scène ---
-        yield return new WaitForSeconds(delayBeforeGame);
-
-#if UNITY_EDITOR
-        //Bloc de débug pendant le dev du jeu
-        //ne s'execute que dans l'éditeur unity donc pas dans la compilation
-        if (!Application.CanStreamedLevelBeLoaded(nextScene))
-        {
-            Debug.LogError($"Scène '{nextScene}' non trouvée dans la Build List !");
-            yield break;
-        }
-#endif
-
-        SceneManager.LoadScene(nextScene);
+        // lancement de la transition complète
+        StartCoroutine(PlayTransition());
     }
 
 
 
-    // Appelé par le bouton Quit
+    // quitter le jeu
     public void OnQuitClicked()
     {
-        StartCoroutine(QuitRoutine());
-    }
-
-    private IEnumerator QuitRoutine()
-    {
-        yield return new WaitForSeconds(1f);
-        //idem que plus haut 
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -102,9 +69,66 @@ public class IntroTransition : MonoBehaviour
 #endif
     }
 
+
+
+    // bouton skip → sauter toute la transition
     public void OnSkipClicked()
     {
+        StopAllCoroutines();
         SceneManager.LoadScene(nextScene);
     }
 
+
+
+    private IEnumerator PlayTransition()
+    {
+        // on cache tous les objets définis (warning bubble, etc)
+        foreach (var obj in objectsToHide)
+            if (obj != null)
+                obj.SetActive(false);
+
+        // animation démon
+        if (fadeImage != null)
+        {
+            fadeImage.fadeDuration = demonFadeDuration;
+            fadeImage.FadeIn();
+            yield return new WaitForSeconds(demonFadeDuration);
+
+            yield return new WaitForSeconds(demonHoldDuration);
+
+            fadeImage.FadeOut();
+            yield return new WaitForSeconds(demonFadeDuration);
+        }
+
+        // maintenant que la partie démon est finie, on affiche skip
+        if (skipButton != null)
+            skipButton.SetActive(true);
+
+        // affichage du texte de transition avec effet
+        if (introText != null)
+        {
+            var effect = introText.GetComponent<TextEffect>();
+
+            if (effect != null)
+            {
+                bool finished = false;
+
+                effect.OnFinished = null;            // reset sécurité
+                effect.OnFinished += () => finished = true;
+
+                effect.Run(transitionText);
+
+                yield return new WaitUntil(() => finished);
+            }
+            else
+            {
+                introText.text = transitionText;
+            }
+        }
+
+        // petit délai avant entrée dans la scène du jeu
+        yield return new WaitForSeconds(delayBeforeGame);
+
+        SceneManager.LoadScene(nextScene);
+    }
 }

@@ -17,9 +17,6 @@ public class GameController : MonoBehaviour
 
     [Header("Options")]
     [SerializeField] private bool randomizeAnswers = true;      // Si vrai, on mélange l’ordre des réponses (histoire de ne pas cliquer toujours sur le même bouton)
-    [SerializeField] private string badEndingScene = "BadEnd";  // Nom de la scène pour la mauvaise fin
-    [SerializeField] private string neutralEndingScene = "NeutralEnd"; // Nom de la scène pour la fin neutre
-    [SerializeField] private string goodEndingScene = "GoodEnd";       // Nom de la scène pour la bonne fin
 
     private int currentIndex = 0;                               // Index de la question actuelle
     private int gauge = 0;                                      // Valeur de la jauge (emprise / karma chelou)
@@ -200,20 +197,27 @@ public class GameController : MonoBehaviour
     {
         Debug.Log($"[Ending] gauge={gauge} | badMax={gameData.badEndingMax} | goodMin={gameData.goodEndingMin}");
 
+        // Bonne fin
         if (gauge >= gameData.goodEndingMin)
         {
-            SceneManager.LoadScene(goodEndingScene);
+            GameResult.lastEnding = EndingType.Good;   // on stocke la fin
+            SceneManager.LoadScene("EndScene");        // on charge la même scène
             return;
         }
 
+        // Mauvaise fin
         if (gauge <= gameData.badEndingMax)
         {
-            SceneManager.LoadScene(badEndingScene);
+            GameResult.lastEnding = EndingType.Bad;    // on stocke la fin
+            SceneManager.LoadScene("EndScene");
             return;
         }
 
-        SceneManager.LoadScene(neutralEndingScene);
+        // Fin neutre
+        GameResult.lastEnding = EndingType.Neutral;
+        SceneManager.LoadScene("EndScene");
     }
+
 
     private void UpdateBackground(BackgroundType type)
     {
