@@ -30,11 +30,11 @@ public class IntroTransition : MonoBehaviour
     [SerializeField] private string nextScene = "GameScene";
     
 
-    // void Start()
-    // {
-    //     // lancer le fade-in quand tout est prêt
-    //     introAudioFader.FadeIn(3f, 0.40f);
-    // }
+    void Start()
+    {
+        //jouer la musique
+        AudioManager.Instance.PlayAmbience("Intro");
+    }
     private void Awake()
     {
         // bouton skip caché au lancement

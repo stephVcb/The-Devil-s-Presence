@@ -9,10 +9,23 @@ public class AudioManager : MonoBehaviour
     // La source principale pour les ambiances
     public AudioSource ambienceSource;
 
-    // Les sons à utiliser selon la pièce
+    // Les sons à utiliser selon la pièce/scene
+    public AudioClip introClip;
     public AudioClip salonClip;
     public AudioClip cuisineClip;
     public AudioClip chambreClip;
+
+    // Musiques pour les fins (good / neutral / bad)
+    public AudioClip endBadClip;
+    public AudioClip endNeutralClip;
+    public AudioClip endGoodClip;
+
+
+    // pour les petits sons
+    [SerializeField] private AudioSource sfxSource; 
+    // pour faire les fade-in / fade-out
+    [SerializeField] private AudioFader audioFade;
+
 
     void Awake()
     {
@@ -33,20 +46,65 @@ public class AudioManager : MonoBehaviour
     {
         AudioClip nextClip = null;
 
-        // Choisir le bon son selon le background de la Q
-        if (background == "Salon") nextClip = salonClip;
-        if (background == "Cuisine") nextClip = cuisineClip;
-        if (background == "Chambre") nextClip = chambreClip;
-
-        if (nextClip == null)
+        // choisir la bonne ambiance selon la pièce
+        switch (background)
         {
-            Debug.LogWarning("Pas de son trouvé pour : " + background);
-            return;
+            case "Salon":
+                nextClip = salonClip;
+                break;
+
+            case "Chambre":
+                nextClip = chambreClip;
+                break;
+
+            case "Cuisine":
+                nextClip = cuisineClip;
+                break;
+            case "Intro":
+                nextClip = introClip;
+                break;
         }
 
-        // changement d'ambiance (fade)
+        if (nextClip == null || ambienceSource == null)
+            return;
+
+        // si c'est déjà cette musique, rien à faire
+        if (ambienceSource.clip == nextClip)
+            return;
+
+        // fade-out -> changement -> fade-in
         StartCoroutine(SwitchAmbience(nextClip));
     }
+    
+    //jouer musique de fin
+    public void PlayEndingMusic(string endingType)
+    {
+        AudioClip nextClip = null;
+
+        switch (endingType)
+        {
+            case "Bad":
+                nextClip = endBadClip;
+                break;
+
+            case "Neutral":
+                nextClip = endNeutralClip;
+                break;
+
+            case "Good":
+                nextClip = endGoodClip;
+                break;
+        }
+
+        if (nextClip == null || ambienceSource == null)
+            return;
+
+        if (ambienceSource.clip == nextClip)
+            return;
+
+        StartCoroutine(SwitchAmbience(nextClip));
+    }
+
 
     // Fade-out puis change de musique puis le fade-in
     IEnumerator SwitchAmbience(AudioClip newClip)
@@ -77,4 +135,23 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
     }
+    public void PlaySFX(AudioClip clip)
+    {
+        if (clip == null || sfxSource == null)
+            return;
+
+        // on change le son du SFX
+        sfxSource.clip = clip;
+
+        // on force le volume à 0 pour faire la montée en douceur
+        sfxSource.volume = 0f;
+
+        // on lance le fade-in sur 0.2 sec (petit effet smooth)
+        if (audioFade != null)
+            audioFade.FadeIn(0.2f, 1f);  // // augmenter le son en 0.2 sec jusqu'à volume 1
+        else
+            sfxSource.Play();            // // si pas de fade -> on joue brut
+    }
+
+
 }

@@ -1208,12 +1208,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322214876}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 396.35226, y: 192.1269, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1554278545}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1322572530
 GameObject:
@@ -1588,7 +1588,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1322214879}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1554278546
@@ -1604,9 +1605,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ambienceSource: {fileID: 1554278544}
+  introClip: {fileID: 0}
   salonClip: {fileID: 8300000, guid: 2f368744611899c4cad9d94e710a3ece, type: 3}
   cuisineClip: {fileID: 8300000, guid: ba8c3a99a9485eb419f3ae65631c2d1b, type: 3}
   chambreClip: {fileID: 8300000, guid: d21606a6ac95434408b7cde2a352cc8a, type: 3}
+  endBadClip: {fileID: 8300000, guid: be7de8c15cc1cee5685b2736ba2f1c3f, type: 3}
+  endNeutralClip: {fileID: 8300000, guid: bde0eacc8690616419f0cd7758334d63, type: 3}
+  endGoodClip: {fileID: 8300000, guid: 9891f0947687d6041bd9ef7ab3c10462, type: 3}
+  sfxSource: {fileID: 0}
+  audioFade: {fileID: 0}
 --- !u!1 &1766863910
 GameObject:
   m_ObjectHideFlags: 0
@@ -2231,5 +2238,4 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 220193084}
   - {fileID: 298759000}
-  - {fileID: 1322214879}
   - {fileID: 1554278545}

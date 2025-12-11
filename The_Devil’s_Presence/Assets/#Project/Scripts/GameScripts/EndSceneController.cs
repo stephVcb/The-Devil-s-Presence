@@ -82,21 +82,23 @@ public class EndSceneController : MonoBehaviour
                 menuButton.SetActive(true);
         }
 
-        // musique de fin selon l'ending atteinte
+        // choisir la bonne musique de fin (bad / neutral / good)
+        // on passe par l’AudioManager pour avoir le fade-out + fade-in propre
         switch (GameResult.lastEnding)
         {
             case EndingType.Bad:
-                if (audioSource && badEndingClip) audioSource.PlayOneShot(badEndingClip);
+                AudioManager.Instance.PlayEndingMusic("Bad");
                 break;
 
             case EndingType.Good:
-                if (audioSource && goodEndingClip) audioSource.PlayOneShot(goodEndingClip);
+                AudioManager.Instance.PlayEndingMusic("Good");
                 break;
 
             default: // Neutral
-                if (audioSource && neutralEndingClip) audioSource.PlayOneShot(neutralEndingClip);
+                AudioManager.Instance.PlayEndingMusic("Neutral");
                 break;
         }
+
 
     }
 
