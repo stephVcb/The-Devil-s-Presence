@@ -5,6 +5,9 @@ using System.Collections;
 
 public class IntroTransition : MonoBehaviour
 {
+    // [Header("Son")]
+    // public AudioFader introAudioFader;
+
     [Header("UI Références")]
     [SerializeField] private TextMeshProUGUI introText;    // zone texte utilisée pour le warning + transition
     [SerializeField] private GameObject[] objectsToHide;   // warningBubble, etc
@@ -25,9 +28,13 @@ public class IntroTransition : MonoBehaviour
     [Header("Fin de transition")]
     [SerializeField] private float delayBeforeGame = 1f;   // petit délai avant d’aller dans la scène du jeu
     [SerializeField] private string nextScene = "GameScene";
+    
 
-
-
+    // void Start()
+    // {
+    //     // lancer le fade-in quand tout est prêt
+    //     introAudioFader.FadeIn(3f, 0.40f);
+    // }
     private void Awake()
     {
         // bouton skip caché au lancement

@@ -39,64 +39,65 @@ public class GameController : MonoBehaviour
         RenderCurrentQuestion();
     }
 
-    void RenderCurrentQuestion()
+void RenderCurrentQuestion()
+{
+    // Si pas de données -> rideau.
+    if (gameData == null || gameData.questions == null)
     {
-        // Si pas de données -> rideau.
-        if (gameData == null || gameData.questions == null)
-        {
-            Debug.LogError("[GC] GameData ou sa liste de questions est null.");
-            return;
-        }
-
-        // Si on a dépassé la dernière question -> on enchaîne sur la fin.
-        if (currentIndex >= gameData.questions.Count)
-        {
-            ShowEnding();
-            return;
-        }
-
-        var q = gameData.questions[currentIndex];
-
-        if (q == null || q.reponses == null || q.reponses.Count == 0)
-        {
-            Debug.LogWarning($"[GC] Question {currentIndex} invalide, on saute.");
-            currentIndex++;
-            RenderCurrentQuestion();
-            return;
-        }
-
-        // On coupe les boutons pendant que la phrase s'écrit (on est pas pressés).
-        foreach (var btn in answerButtons)
-        {
-            if (btn) btn.gameObject.SetActive(false);
-        }
-
-        // Décor adapté à la question
-        UpdateBackground(q.background);
-
-        // On branche le callback : quand le texte est fini -> on affiche les réponses
-        if (typewriter != null)
-        {
-            typewriter.OnFinished = () =>
-            {
-                ShowAnswers(q);
-            };
-
-            typewriter.Run(q.prompt);
-        }
-        else
-        {
-            // Si jamais le typewriter n’est pas branché, on fait un affichage brut + réponses directes.
-            if (questionText != null)
-                questionText.text = q.prompt;
-
-            ShowAnswers(q);
-        }
+        Debug.LogError("[GC] GameData ou sa liste de questions est null.");
+        return;
     }
 
-    /// <summary>
-    /// Affiche les réponses une fois que la question est complètement écrite.
-    /// </summary>
+    // Si on a dépassé la dernière question -> on enchaîne sur la fin.
+    if (currentIndex >= gameData.questions.Count)
+    {
+        ShowEnding();
+        return;
+    }
+
+    var q = gameData.questions[currentIndex];
+
+    if (q == null || q.reponses == null || q.reponses.Count == 0)
+    {
+        Debug.LogWarning($"[GC] Question {currentIndex} invalide, on saute.");
+        currentIndex++;
+        RenderCurrentQuestion();
+        return;
+    }
+
+    // On coupe les boutons pendant que la phrase s'écrit (on est pas pressés).
+    foreach (var btn in answerButtons)
+    {
+        if (btn) btn.gameObject.SetActive(false);
+    }
+
+    // Décor adapté à la question
+    UpdateBackground(q.background);
+
+    // son en fct la pièce (salon/chambre/cuisine)
+    AudioManager.Instance.PlayAmbience(q.background.ToString());
+
+    // On branche le callback : quand le texte est fini -> on affiche les réponses
+    if (typewriter != null)
+    {
+        typewriter.OnFinished = () =>
+        {
+            ShowAnswers(q);
+        };
+
+        typewriter.Run(q.prompt);
+    }
+    else
+    {
+        // Si jamais le typewriter n’est pas branché, on fait un affichage brut + réponses directes.
+        if (questionText != null) questionText.text = q.prompt;
+
+        ShowAnswers(q);
+    }
+}
+
+
+    // Afficher les réponses une fois que la question est complètement écrite.
     private void ShowAnswers(Questions q)
     {
         // Préparation de l’ordre d’affichage

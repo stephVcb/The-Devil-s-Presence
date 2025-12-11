@@ -20,6 +20,12 @@ public class EndSceneController : MonoBehaviour
     [SerializeField] private GameObject menuButton;      // Le bouton "Menu" à afficher à la fin
     [SerializeField] private string menuSceneName = "SceneIntro"; // Nom de la scène du menu
 
+    [Header("Musique de fin")]
+    [SerializeField] private AudioClip badEndingClip;     // son pour la mauvaise fin
+    [SerializeField] private AudioClip neutralEndingClip; // son pour la fin neutre
+    [SerializeField] private AudioClip goodEndingClip;    // son pour la bonne fin
+    [SerializeField] private AudioSource audioSource;     // source pour jouer la musique de fin
+
     private void Start()
     {
         string message = "";
@@ -29,12 +35,12 @@ public class EndSceneController : MonoBehaviour
         switch (GameResult.lastEnding)
         {
             case EndingType.Bad:
-                message = "Misérable vermine...\nTu as échoué lamentablement.";
+                message = "Misérable vermine...\nVoilà qu'un prêtre débarque!!!!! je me sens partir et retourner dans l'entre des Enfer...";
                 spriteToUse = badSprite;
                 break;
 
             case EndingType.Good:
-                message = "Étrangement... tu ne l'as pas détruit.\nPas complètement.";
+                message = "te voilà pendouillant.. Il ne t'a pas fallu grand chose pour te détruire...\nHâte de rencontrer la prochaine victime.";
                 spriteToUse = goodSprite;
                 break;
 
@@ -75,6 +81,23 @@ public class EndSceneController : MonoBehaviour
             if (menuButton != null)
                 menuButton.SetActive(true);
         }
+
+        // musique de fin selon l'ending atteinte
+        switch (GameResult.lastEnding)
+        {
+            case EndingType.Bad:
+                if (audioSource && badEndingClip) audioSource.PlayOneShot(badEndingClip);
+                break;
+
+            case EndingType.Good:
+                if (audioSource && goodEndingClip) audioSource.PlayOneShot(goodEndingClip);
+                break;
+
+            default: // Neutral
+                if (audioSource && neutralEndingClip) audioSource.PlayOneShot(neutralEndingClip);
+                break;
+        }
+
     }
 
     // Action du bouton “Retour Accueil”
