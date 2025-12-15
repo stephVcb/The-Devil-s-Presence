@@ -922,9 +922,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundImage: {fileID: 515319153}
-  badSprite: {fileID: 0}
-  neutralSprite: {fileID: 0}
-  goodSprite: {fileID: 0}
+  badSprite: {fileID: 21300000, guid: 5bcc949aa523ec14a99d50f1b0c51b53, type: 3}
+  neutralSprite: {fileID: 21300000, guid: 73028fbcab0d7ee4bb533a42505407ad, type: 3}
+  goodSprite: {fileID: 21300000, guid: 6d13fd95ac51ef84eb5f26d456f02256, type: 3}
   endTextEffect: {fileID: 552563804}
   endTextTMP: {fileID: 552563801}
   menuButton: {fileID: 687851203}
