@@ -11,7 +11,7 @@ public class IntroAnimator : MonoBehaviour
     [Header("Boutons")]
     [SerializeField] private GameObject startButton;
     [SerializeField] private GameObject quitButton;
-    [SerializeField] private GameObject skipButton;
+    //[SerializeField] private GameObject skipButton;
 
     private bool buttonsShown = false;
 
@@ -20,7 +20,7 @@ public class IntroAnimator : MonoBehaviour
         // Cache les boutons au début
         if (startButton != null) startButton.SetActive(false);
         if (quitButton != null) quitButton.SetActive(false);
-        if (skipButton != null) skipButton.SetActive(false);
+        //if (skipButton != null) skipButton.SetActive(false);
 
         // Quand le warning est fini → on montre les boutons
         if (warningEffect != null)
@@ -40,6 +40,6 @@ public class IntroAnimator : MonoBehaviour
 
         if (startButton != null) startButton.SetActive(true);
         if (quitButton != null) quitButton.SetActive(true);
-        if (skipButton != null) skipButton.SetActive(true);
+       // if (skipButton != null) skipButton.SetActive(true);
     }
 }

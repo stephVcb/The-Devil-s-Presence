@@ -46,17 +46,14 @@ public class AudioManager : MonoBehaviour
     {
         AudioClip nextClip = null;
 
-        // choisir la bonne ambiance selon la pièce
         switch (background)
         {
             case "Salon":
                 nextClip = salonClip;
                 break;
-
             case "Chambre":
                 nextClip = chambreClip;
                 break;
-
             case "Cuisine":
                 nextClip = cuisineClip;
                 break;
@@ -72,9 +69,19 @@ public class AudioManager : MonoBehaviour
         if (ambienceSource.clip == nextClip)
             return;
 
-        // fade-out -> changement -> fade-in
+        // aucune musique encore lancée → play direct
+        if (!ambienceSource.isPlaying || ambienceSource.clip == null)
+        {
+            ambienceSource.clip = nextClip;
+            ambienceSource.volume = 1f;
+            ambienceSource.Play();
+            return;
+        }
+
+        // musique déjà en cours → fade
         StartCoroutine(SwitchAmbience(nextClip));
     }
+
     
     //jouer musique de fin
     public void PlayEndingMusic(string endingType)
@@ -99,9 +106,20 @@ public class AudioManager : MonoBehaviour
         if (nextClip == null || ambienceSource == null)
             return;
 
+        // si c'est deja cette musique, on ne relance pas
         if (ambienceSource.clip == nextClip)
             return;
 
+        // aucune musique en cours -> play direct
+        if (!ambienceSource.isPlaying || ambienceSource.clip == null)
+        {
+            ambienceSource.clip = nextClip;
+            ambienceSource.volume = 1f;
+            ambienceSource.Play(); // lancement musique de fin immediat
+            return;
+        }
+
+        // musique deja en cours -> fade
         StartCoroutine(SwitchAmbience(nextClip));
     }
 
@@ -152,6 +170,17 @@ public class AudioManager : MonoBehaviour
         else
             sfxSource.Play();            // // si pas de fade -> on joue brut
     }
+    
+    // Arrêt de la musique d'ambiance
+    public void StopAmbience()
+    {
+        if (ambienceSource == null)
+            return;
+
+        ambienceSource.Stop();
+        ambienceSource.clip = null;
+    }
+
 
 
 }

@@ -60,6 +60,13 @@ public class IntroTransition : MonoBehaviour
         if (introText != null)
             introText.text = "";
 
+        // afficher skip immédiatement
+        if (skipButton != null)
+        {
+            skipButton.SetActive(true);
+            skipButton.transform.SetAsLastSibling(); // sécurité UI
+        }
+
         // lancement de la transition complète
         StartCoroutine(PlayTransition());
     }
@@ -82,6 +89,7 @@ public class IntroTransition : MonoBehaviour
     public void OnSkipClicked()
     {
         StopAllCoroutines();
+        AudioManager.Instance.StopAmbience(); // arrêt musique intro
         SceneManager.LoadScene(nextScene);
     }
 
@@ -107,10 +115,6 @@ public class IntroTransition : MonoBehaviour
             yield return new WaitForSeconds(demonFadeDuration);
         }
 
-        // maintenant que la partie démon est finie, on affiche skip
-        if (skipButton != null)
-            skipButton.SetActive(true);
-
         // affichage du texte de transition avec effet
         if (introText != null)
         {
@@ -133,9 +137,11 @@ public class IntroTransition : MonoBehaviour
             }
         }
 
-        // petit délai avant entrée dans la scène du jeu
+        // petit delai avant entree dans la scene du jeu
         yield return new WaitForSeconds(delayBeforeGame);
 
+        AudioManager.Instance.StopAmbience(); // arret musique intro
+        
         SceneManager.LoadScene(nextScene);
     }
 }

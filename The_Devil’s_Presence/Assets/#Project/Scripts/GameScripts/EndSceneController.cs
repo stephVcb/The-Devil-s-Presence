@@ -20,14 +20,17 @@ public class EndSceneController : MonoBehaviour
     [SerializeField] private GameObject menuButton;      // Le bouton "Menu" à afficher à la fin
     [SerializeField] private string menuSceneName = "SceneIntro"; // Nom de la scène du menu
 
-    [Header("Musique de fin")]
-    [SerializeField] private AudioClip badEndingClip;     // son pour la mauvaise fin
-    [SerializeField] private AudioClip neutralEndingClip; // son pour la fin neutre
-    [SerializeField] private AudioClip goodEndingClip;    // son pour la bonne fin
-    [SerializeField] private AudioSource audioSource;     // source pour jouer la musique de fin
+    // [Header("Musique de fin")]
+    // [SerializeField] private AudioClip badEndingClip;     // son pour la mauvaise fin
+    // [SerializeField] private AudioClip neutralEndingClip; // son pour la fin neutre
+    // [SerializeField] private AudioClip goodEndingClip;    // son pour la bonne fin
+    // [SerializeField] private AudioSource audioSource;     // source pour jouer la musique de fin
 
     private void Start()
     {
+        // securite : coupe toute musique precedente
+        AudioManager.Instance.StopAmbience(); 
+
         string message = "";
         Sprite spriteToUse = null;
 
@@ -35,7 +38,7 @@ public class EndSceneController : MonoBehaviour
         switch (GameResult.lastEnding)
         {
             case EndingType.Bad:
-                message = "Misérable vermine...\nVoilà qu'un prêtre débarque!!!!! je me sens partir et retourner dans l'entre des Enfer...";
+                message = "Me voilà bloqué ici avec cet humain stupide...\nJe ne suis pas assez maléfique pour lui visiblement...\nDevrais-je recommencer pour qu'il en finisse...";
                 spriteToUse = badSprite;
                 break;
 
@@ -45,7 +48,7 @@ public class EndSceneController : MonoBehaviour
                 break;
 
             default: // Neutral
-                message = "Il survivra.\nMais il ne sera plus jamais le même.";
+                message = "Tu ramène un prêtre?!\nCe que tu ne sais pas c'est qu'en faisant ça, tu m'ouvre les portes pour entrer en toi! \nMerci bête humain!";
                 spriteToUse = neutralSprite;
                 break;
         }
@@ -105,6 +108,10 @@ public class EndSceneController : MonoBehaviour
     // Action du bouton “Retour Accueil”
     public void OnClickReturnToMenu()
     {
+        // arret musique de fin
+        AudioManager.Instance.StopAmbience(); 
+
+        // retour au menu d'intro
         SceneManager.LoadScene(menuSceneName);
     }
 }
