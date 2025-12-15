@@ -638,15 +638,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Quit
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 61bc2dde8f5e7984bb52396859551f39, type: 2}
+  m_sharedMaterial: {fileID: 6098960904096201568, guid: 61bc2dde8f5e7984bb52396859551f39, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282935237
-  m_fontColor: {r: 0.7735849, g: 0.4055448, b: 0.28097185, a: 1}
+    rgba: 4289185272
+  m_fontColor: {r: 0.972549, g: 0.77254903, b: 0.654902, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -663,8 +663,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -673,7 +673,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 8
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1037,7 +1037,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   warningEffect: {fileID: 1298110099}
   warningText: "Attention,\nCe jeu aborde des sujets sensibles (violences physique,
-    psychologique, suicide,...)  pouvant heurter la sensibilit\xE9 de chacun.\nStart
+    psychologique, suicide,...)  pouvant heurter la sensibilite de chacun.\nStart
     : commencer \nQuit: quitter le jeu"
   startButton: {fileID: 1476443699}
   quitButton: {fileID: 1322572530}
@@ -1604,10 +1604,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ambienceSource: {fileID: 1554278544}
-  introClip: {fileID: 0}
-  salonClip: {fileID: 8300000, guid: 2f368744611899c4cad9d94e710a3ece, type: 3}
-  cuisineClip: {fileID: 8300000, guid: ba8c3a99a9485eb419f3ae65631c2d1b, type: 3}
-  chambreClip: {fileID: 8300000, guid: d21606a6ac95434408b7cde2a352cc8a, type: 3}
+  introClip: {fileID: 8300000, guid: c2c392d4ec07d40528432c3bda4bc466, type: 3}
+  salonClip: {fileID: 8300000, guid: b2640994297419d49a33692783b5ab51, type: 3}
+  cuisineClip: {fileID: 8300000, guid: b356c676c0b99964594243db133ee8cc, type: 3}
+  chambreClip: {fileID: 8300000, guid: 748ec2508c05d2942a7632a78a4347e3, type: 3}
   endBadClip: {fileID: 8300000, guid: be7de8c15cc1cee5685b2736ba2f1c3f, type: 3}
   endNeutralClip: {fileID: 8300000, guid: bde0eacc8690616419f0cd7758334d63, type: 3}
   endGoodClip: {fileID: 8300000, guid: 90ac2237841c0f44d9d7a2b37dc325e5, type: 3}
@@ -1672,7 +1672,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Skip
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 61bc2dde8f5e7984bb52396859551f39, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1680,7 +1680,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4282935237
-  m_fontColor: {r: 0.7735849, g: 0.4055448, b: 0.28097185, a: 1}
+  m_fontColor: {r: 0.972549, g: 0.77254903, b: 0.654902, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1697,8 +1697,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1707,7 +1707,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 8
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1738,7 +1738,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 2.2313662}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1766863913
@@ -2111,6 +2111,50 @@ PrefabInstance:
       propertyPath: m_text
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8554365611871489500, guid: 864c4c934e57a3f4ba874de0473ae3af, type: 3}
+      propertyPath: m_fontSize
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 8554365611871489500, guid: 864c4c934e57a3f4ba874de0473ae3af, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 61bc2dde8f5e7984bb52396859551f39, type: 2}
+    - target: {fileID: 8554365611871489500, guid: 864c4c934e57a3f4ba874de0473ae3af, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.654902
+      objectReference: {fileID: 0}
+    - target: {fileID: 8554365611871489500, guid: 864c4c934e57a3f4ba874de0473ae3af, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.77254903
+      objectReference: {fileID: 0}
+    - target: {fileID: 8554365611871489500, guid: 864c4c934e57a3f4ba874de0473ae3af, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.972549
+      objectReference: {fileID: 0}
+    - target: {fileID: 8554365611871489500, guid: 864c4c934e57a3f4ba874de0473ae3af, type: 3}
+      propertyPath: m_lineSpacing
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8554365611871489500, guid: 864c4c934e57a3f4ba874de0473ae3af, type: 3}
+      propertyPath: m_wordSpacing
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8554365611871489500, guid: 864c4c934e57a3f4ba874de0473ae3af, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 8554365611871489500, guid: 864c4c934e57a3f4ba874de0473ae3af, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6098960904096201568, guid: 61bc2dde8f5e7984bb52396859551f39, type: 2}
+    - target: {fileID: 8554365611871489500, guid: 864c4c934e57a3f4ba874de0473ae3af, type: 3}
+      propertyPath: m_characterSpacing
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8554365611871489500, guid: 864c4c934e57a3f4ba874de0473ae3af, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2222,6 +2266,46 @@ PrefabInstance:
     - target: {fileID: 5193800436169097504, guid: 46cb27619a487de41840ef6ea6eb68f8, type: 3}
       propertyPath: m_Name
       value: Start
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315335723650786802, guid: 46cb27619a487de41840ef6ea6eb68f8, type: 3}
+      propertyPath: m_fontSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315335723650786802, guid: 46cb27619a487de41840ef6ea6eb68f8, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 61bc2dde8f5e7984bb52396859551f39, type: 2}
+    - target: {fileID: 5315335723650786802, guid: 46cb27619a487de41840ef6ea6eb68f8, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.654902
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315335723650786802, guid: 46cb27619a487de41840ef6ea6eb68f8, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.77254903
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315335723650786802, guid: 46cb27619a487de41840ef6ea6eb68f8, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.972549
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315335723650786802, guid: 46cb27619a487de41840ef6ea6eb68f8, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315335723650786802, guid: 46cb27619a487de41840ef6ea6eb68f8, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6098960904096201568, guid: 61bc2dde8f5e7984bb52396859551f39, type: 2}
+    - target: {fileID: 5315335723650786802, guid: 46cb27619a487de41840ef6ea6eb68f8, type: 3}
+      propertyPath: m_characterSpacing
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315335723650786802, guid: 46cb27619a487de41840ef6ea6eb68f8, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4289185272
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315335723650786802, guid: 46cb27619a487de41840ef6ea6eb68f8, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
