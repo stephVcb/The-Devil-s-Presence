@@ -14,59 +14,60 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questions:
   - id: Q0
-    prompt: "Ah\u2026 te voil\xE0 enfin. M\xEAme ta respiration sonne comme une excuse.
-      Laisse-moi r\xE9fl\xE9chir\u2026 comment te briser en douceur pour commencer
-      ?"
+    prompt: "Ah\u2026 te voila enfin. Meme ta respiration sonne comme une excuse. 
+      Laisse-moi reflechir\u2026 comment te briser en douceur pour commencer ?"
     reponses:
-    - text: Faire grincer le parquet.
+    - text: Faire grincer le parquet, derriere toi?
       impact: -1
       nextQuestion: -1
-    - text: "\xC9teindre tout d\u2019un coup."
+    - text: Eteindre la lumiere alors que tu viens de l'allumer?
       impact: 0
       nextQuestion: 2
-    - text: Claquer toutes les portes.
-      impact: 2
+    - text: faire tomber un cadre a cote de ta bete tete?
+      impact: 1
       nextQuestion: 2
     background: 0
   - id: Q1
-    prompt: "La cuisine\u2026 l\u2019endroit parfait pour commencer les d\xE9g\xE2ts.
-      Tout ici coupe, pique, ou cong\xE8le. Et toi, tu trembles d\xE9j\xE0."
+    prompt: "Interessant\u2026 Tu as suivi le bruit sans reflechir. Les humains font
+      souvent ca quand ils sont nerveux. Ici, tout est fragile\u2026 et toi aussi.
+      Qu\u2019est-ce que je teste sur toi ?"
     reponses:
-    - text: Faire vibrer les verres.
+    - text: Faire vibrer la vaisselle?
       impact: -1
       nextQuestion: -2
-    - text: Claquer le tiroir aux couteaux.
+    - text: Claquer le tiroir des couteaux?
       impact: 1
       nextQuestion: 2
-    - text: Faire voler un couteau.
+    - text: Faire voler un couteau vers toi?
       impact: 2
       nextQuestion: 2
     background: 2
   - id: Q2
-    prompt: "La chambre\u2026 enfin un lieu intime. Tu devrais te sentir en s\xE9curit\xE9
-      ici. C\u2019est fou comme certains croient encore \xE0 \xE7a."
+    prompt: "Ah\u2026 la chambre. Tu t\u2019es dit que ce serait plus calme. Que
+      tu serais en securite.  Je vais prendre mon temps. Jouer avec toi.  Comment
+      t\u2019ab\xEEmer lentement ?"
     reponses:
-    - text: "Faire s\u2019affaisser le matelas."
+    - text: Affaisser le matelas a cote de toi?
       impact: -1
       nextQuestion: -1
-    - text: "Tirer la couverture d\u2019un coup sec."
+    - text: "Tirer ta couverture d\u2019un coup sec?"
       impact: 1
       nextQuestion: -1
-    - text: "Te tra\xEEner hors du lit."
+    - text: Te trainer hors du lit?
       impact: 2
       nextQuestion: -1
     background: 1
   - id: Q3
-    prompt: "Et te voil\xE0  dans ma cuisine\u2026 dans mon ventre. Alors\u2026 qu\u2019est-ce
-      que je prends en premier ?"
+    prompt: "Peu importe ou tu vas. Je te trouve. Toujours.  Tu n\u2019es pas en
+      fuite. Tu es deja a moi.  Comment te demolir ?"
     reponses:
-    - text: "\xC9touffer un souvenir."
+    - text: Faire passer une ombre devant lui?
       impact: -1
       nextQuestion: -1
-    - text: Te voler ta voix.
+    - text: Remplacer ta voix par la mienne?
       impact: 1
       nextQuestion: -1
-    - text: "T\u2019\xE9vider de l\u2019int\xE9rieur"
+    - text: Te tirer les cheveux et te mettre une giffle?
       impact: 2
       nextQuestion: -1
     background: 2

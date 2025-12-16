@@ -38,17 +38,17 @@ public class EndSceneController : MonoBehaviour
         switch (GameResult.lastEnding)
         {
             case EndingType.Bad:
-                message = "Me voilà bloqué ici avec cet humain stupide...\nJe ne suis pas assez maléfique pour lui visiblement...\nDevrais-je recommencer pour qu'il en finisse...";
+                message = "Me voila bloque ici avec cet humain stupide...\nJe ne suis pas assez maléfique pour lui visiblement...\nDevrais-je recommencer pour qu'il en finisse...";
                 spriteToUse = badSprite;
                 break;
 
             case EndingType.Good:
-                message = "te voilà pendouillant.. Il ne t'a pas fallu grand chose pour te détruire...\nHâte de rencontrer la prochaine victime.";
+                message = "te voila pendouillant.. Il ne t'a pas fallu grand chose pour te detruire...\nHate de rencontrer la prochaine victime.";
                 spriteToUse = goodSprite;
                 break;
 
             default: // Neutral
-                message = "Tu ramène un prêtre?!\nCe que tu ne sais pas c'est qu'en faisant ça, tu m'ouvre les portes pour entrer en toi! \nMerci bête humain!";
+                message = "Tu ramene un prêtre?!\nCe que tu ne sais pas c'est qu'en faisant ça, tu m'ouvre les portes pour entrer en toi! \nMerci bete humain!";
                 spriteToUse = neutralSprite;
                 break;
         }
