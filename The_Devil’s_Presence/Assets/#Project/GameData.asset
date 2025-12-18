@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questions:
   - id: Q0
-    prompt: "Ah\u2026 te voila enfin. Meme ta respiration sonne comme une excuse. 
+    prompt: "Ah\u2026 te voila enfin. Meme ta respiration sent comme une excuse. 
       Laisse-moi reflechir\u2026 comment te briser en douceur pour commencer ?"
     reponses:
     - text: Faire grincer le parquet, derriere toi?
@@ -45,7 +45,7 @@ MonoBehaviour:
   - id: Q2
     prompt: "Ah\u2026 la chambre. Tu t\u2019es dit que ce serait plus calme. Que
       tu serais en securite.  Je vais prendre mon temps. Jouer avec toi.  Comment
-      t\u2019ab\xEEmer lentement ?"
+      t\u2019abimer lentement ?"
     reponses:
     - text: Affaisser le matelas a cote de toi?
       impact: -1
@@ -58,8 +58,8 @@ MonoBehaviour:
       nextQuestion: -1
     background: 1
   - id: Q3
-    prompt: "Peu importe ou tu vas. Je te trouve. Toujours.  Tu n\u2019es pas en
-      fuite. Tu es deja a moi.  Comment te demolir ?"
+    prompt: Peu importe ou tu vas. Je te trouve. Toujours.  Tu es ma proie! Tu es
+      a moi.  Comment te demolir ?
     reponses:
     - text: Faire passer une ombre devant lui?
       impact: -1
